@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>파란 청취 실험 도구</title>
+  <link rel="stylesheet" href="common/styles.css">
+</head>
+<body class="participant-page">
+  <main class="shell participant-shell">
+    <header class="app-header participant-header">
+      <div class="brand-mark" aria-hidden="true">◖</div>
+      <div class="brand-copy">
+        <h1>음성 지각 실험</h1>
+        <p class="muted">안내에 따라 음성을 듣고 응답해 주세요.</p>
+      </div>
+    </header>
+
+    <section id="setup" class="card participant-setup-card">
+      <div class="section-kicker">실험 시작</div>
+      <h2>참가자 정보와 실험 자료를 확인합니다</h2>
+      <p class="muted setup-copy">참가자 번호를 입력한 뒤 전달받은 실험 프로젝트 폴더를 여세요.</p>
+
+      <div class="participant-start-grid">
+        <label class="field participant-field">
+          <span>참가자 번호</span>
+          <input id="participantId" type="text" placeholder="예: P001" autocomplete="off">
+        </label>
+        <div class="field participant-field">
+          <span>실험 프로젝트</span>
+          <button id="openFolderBtn" class="primary large-action">실험 프로젝트 열기</button>
+        </div>
+      </div>
+
+      <div class="privacy-note">
+        <span class="privacy-icon" aria-hidden="true">✓</span>
+        <div>
+          <b>음성 파일은 서버로 전송되지 않습니다.</b>
+          <p>선택한 프로젝트의 음성은 이 컴퓨터 안에서만 열어 재생합니다.</p>
+        </div>
+      </div>
+
+      <input id="fallbackFolder" type="file" webkitdirectory multiple class="hidden">
+      <div id="status" class="notice hidden"></div>
+      <div id="actions" class="actions participant-actions hidden"></div>
+    </section>
+
+    <section id="runnerCard" class="card runner-stage hidden">
+      <div id="runnerRoot"></div>
+    </section>
+
+    <section id="complete" class="card completion-card hidden">
+      <div class="completion-icon" aria-hidden="true">✓</div>
+      <h2>실험을 완료했습니다</h2>
+      <p>아래에서 결과 JSON 파일을 저장한 뒤 설계자에게 전달해 주세요. 정답은 결과 파일에 포함되지 않습니다.</p>
+      <div class="actions completion-actions">
+        <button id="saveResult" class="primary large-action">결과 JSON 저장</button>
+        <button id="restartDone" class="danger">처음부터 다시 시작</button>
+      </div>
+    </section>
+
+    <footer class="participant-footer">Voice Experiment · Participant</footer>
+  <footer class="muted small" style="text-align:center;margin:24px 0 8px">
+          파란 청취 실험 도구 · 참가자 v0.6
+        </footer>
+      </main>
+  <script src="common/runner-core.js"></script>
+  <script src="participant.js"></script>
+</body>
+</html>
