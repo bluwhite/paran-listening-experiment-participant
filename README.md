@@ -64,3 +64,12 @@ GitHub에서:
 음성 파일은 참가자의 컴퓨터에서 로컬로 읽습니다.
 음성 파일 자체는 GitHub Pages나 별도 서버로 업로드되지 않습니다.
 참가자가 설계자에게 전달하는 것은 실험 완료 후 생성되는 결과 JSON입니다.
+
+## v0.7 아이콘 적용
+
+- 브라우저 탭 favicon
+- 모바일 홈 화면용 Apple Touch Icon
+- PWA/Web App 아이콘 192px / 512px
+- 프로그램 상단 로고
+- `site.webmanifest` 포함
+
