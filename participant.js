@@ -33,7 +33,7 @@
       try{
         directoryHandle=await window.showDirectoryPicker({mode:"read"});
         await readDirHandle(directoryHandle);
-        await finishFolderRead();
+        await finishFolderRead(directoryHandle.name);
       }catch(e){ if(e.name!=="AbortError") status("폴더를 열 수 없습니다: "+e.message,"error"); }
     }else{
       $("fallbackFolder").value="";
@@ -43,14 +43,16 @@
 
   $("fallbackFolder").addEventListener("change", async e=>{
     files.clear();basenames.clear();
+    const first=e.target.files?.[0];
+    const folderName=first?(first.webkitRelativePath||first.name).replaceAll("\\","/").split("/")[0]:"";
     for(const f of e.target.files){
       const rel=(f.webkitRelativePath||f.name).replaceAll("\\","/").split("/").slice(1).join("/")||f.name;
       files.set(norm(rel),f); const b=bn(rel); if(!basenames.has(b))basenames.set(b,[]);basenames.get(b).push(f);
     }
-    await finishFolderRead();
+    await finishFolderRead(folderName);
   });
 
-  async function finishFolderRead(){
+  async function finishFolderRead(folderName=""){
     const candidates=[];
     for(const [name,list] of basenames.entries()){
       if(name === "experiment.json" || /_experiment\.json$/i.test(name)) candidates.push(...list);
@@ -63,6 +65,7 @@
     if(errs.length){status(errs.join("<br>"),"error");return}
     const missing=experiment.items.filter(x=>!resolveFile(x.audio)).map(x=>x.audio);
     if(missing.length){status(`음성파일 ${missing.length}개가 없습니다.<br>${missing.slice(0,10).join("<br>")}`,"error");return}
+    window.ParanUsage?.projectOpen?.("participant");
     participantId=$("participantId").value.trim();
     if(!participantId){status(`✓ ${experiment.title}<br>✓ 문항 ${experiment.items.length}개<br>✓ 음성파일 확인 완료<br><b>참가자 번호를 입력하세요.</b>`,"ok");return}
     status(`✓ ${experiment.title}<br>✓ 문항 ${experiment.items.length}개<br>✓ 음성파일 확인 완료<br>✓ 음성은 서버로 전송되지 않습니다.`,"ok");
